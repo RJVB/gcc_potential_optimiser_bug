@@ -37,16 +37,16 @@ public:
             try {
                 s_lmdbEnv = lmdb::env::create();
                 std::cerr << __PRETTY_FUNCTION__ << " s_lmdbEnv=" << s_lmdbEnv << "\n";
-                s_lmdbEnv.open("/tmp/kk.lmdb", MDB_NOSYNC);
-                MDB_envinfo stat;
-                lmdb::env_info(s_lmdbEnv.handle(), &stat);
-                if (stat.me_mapsize > s_mapSize) {
-                    s_mapSize = stat.me_mapsize;
-                }
+//                 s_lmdbEnv.open("/tmp/kk.lmdb", MDB_NOSYNC);
+//                 MDB_envinfo stat;
+//                 lmdb::env_info(s_lmdbEnv.handle(), &stat);
+//                 if (stat.me_mapsize > s_mapSize) {
+//                     s_mapSize = stat.me_mapsize;
+//                 }
                 s_lmdbEnv.set_mapsize(s_mapSize);
                 s_lz4CompState = new char[LZ4_sizeofState()];
                 s_envExists = true;
-                std::cerr << "mapsize=" << stat.me_mapsize << " LZ4 state buffer:" << LZ4_sizeofState() << "\n";
+                std::cerr << "mapsize=" << s_mapSize << " LZ4 state buffer:" << LZ4_sizeofState() << "\n";
             } catch (const lmdb::error &e) {
                 std::cerr << lmdbxx_exception_handler(e, "database creation") << "\n";
                 // as per the documentation: the environment must be closed even if creation failed!

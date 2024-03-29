@@ -22,7 +22,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <lmdb.h>      /* for MDB_*, mdb_*() */
+#include "lmdb.h"      /* for MDB_*, mdb_*() */
 
 #ifdef LMDBXX_DEBUG
 #include <cassert>     /* for assert() */
@@ -265,7 +265,7 @@ namespace lmdb {
  */
 static inline void
 lmdb::env_create(MDB_env** env) {
-  const int rc = ::mdb_env_create(env);
+  const int rc = (*env = new(MDB_env)) ? MDB_SUCCESS : ~MDB_SUCCESS; //::mdb_env_create(env);
   if (rc != MDB_SUCCESS) {
     error::raise("mdb_env_create", rc);
   }
@@ -371,7 +371,7 @@ lmdb::env_sync(MDB_env* const env,
 static inline void
 lmdb::env_close(MDB_env* const env) noexcept {
   std::cerr << __PRETTY_FUNCTION__ << " env=" << env << "\n";
-  ::mdb_env_close(env);
+  delete env; //::mdb_env_close(env);
 }
 
 /**
@@ -434,7 +434,7 @@ lmdb::env_get_fd(MDB_env* const env,
 static inline void
 lmdb::env_set_mapsize(MDB_env* const env,
                       const std::size_t size) {
-  const int rc = ::mdb_env_set_mapsize(env, size);
+  const int rc = MDB_SUCCESS; // ::mdb_env_set_mapsize(env, size);
   if (rc != MDB_SUCCESS) {
     error::raise("mdb_env_set_mapsize", rc);
   }
