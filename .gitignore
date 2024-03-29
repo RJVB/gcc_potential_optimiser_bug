@@ -1,4 +1,5 @@
 a.out*
 lmdbhook
 .*.swp
+.*.swo
 *.o

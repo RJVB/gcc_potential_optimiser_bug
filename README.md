@@ -109,3 +109,29 @@ void lmdb::env_close(MDB_env*) env=0xa23020
 lmdb::env::~env() this=0x406298
 void lmdb::env::close() this=0x406298 handle=0
 ```
+
+An alternate `env::close()` function as I would write it also doesn't trigger any issues:
+
+```
+make -B INCLUDES=/opt/local/include LIBS=/opt/local/lib DEFS=-DALTERNATIVE_ENV_CLOSE && lmdbhook
+c++ --version
+c++ (MacPorts gcc12 12.3.0_4+cpucompat+libcxx) 12.3.0
+Copyright (C) 2022 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+c++ -std=c++11 -O3 -DALTERNATIVE_ENV_CLOSE -o lmdbhook -I/opt/local/include -L/opt/local/lib -Wl,-rpath,/opt/local/lib lmdbhook.cpp -llmdb
+LMDBHook::LMDBHook() s_lmdbEnv=0x10e077738
+lmdb::env::env(MDB_env*) this=0x10e077738 handle=0x0
+lmdb::env::env(MDB_env*) this=0x7fff51b8a920 handle=0x7f8ab0c038f0
+lmdb::env::~env() this=0x7fff51b8a920
+void lmdb::env::close() this=0x7fff51b8a920 handle=0x0
+static bool LMDBHook::init() s_lmdbEnv=0x7f8ab0c038f0
+mapsize=1048576 LZ4 state buffer:16384
+LMDB instance is 0x10e077738
+lmdb::env::~env() this=0x10e077738
+void lmdb::env::close() this=0x10e077738 handle=0x7f8ab0c038f0
+void lmdb::env_close(MDB_env*) env=0x7f8ab0c038f0
+LMDBHook::~LMDBHook()
+void lmdb::env::close() this=0x10e077738 handle=0x0
+```

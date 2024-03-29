@@ -11,4 +11,5 @@ RPATH := -Wl,-rpath,$(LIBS)
 endif
 
 lmdbhook : lmdbhook.cpp lmdb+++.h
+	$(CXX) --version
 	$(CXX) -std=c++11 $(OPT) $(DEFS) -o $@ $(INCPATH) $(LIBPATH) $(RPATH) $< -llmdb

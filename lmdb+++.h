@@ -1183,12 +1183,20 @@ public:
    */
   void close() noexcept {
     std::cerr << __PRETTY_FUNCTION__ << " this=" << this << " handle=" << handle() << "\n";
+#ifndef ALTERNATIVE_ENV_CLOSE
     if (handle()) {
       lmdb::env_close(handle());
       _handle = nullptr;
 // 	 std::cerr << " handle now " << handle();
     }
 //     std::cerr << "\n";
+#else
+    if (_handle) {
+	 const auto h = _handle;
+      _handle = nullptr;
+      lmdb::env_close(h);
+    }
+#endif
   }
 
   /**
