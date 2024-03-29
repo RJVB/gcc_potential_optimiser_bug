@@ -69,7 +69,7 @@ LMDBHook::~LMDBHook()
 void lmdb::env::close() this=0x406290 handle=0
 ```
 
-G++ without optimisation
+G++ without optimisation:
 ```
 > make -B INCLUDES=/opt/local/include LIBS=/opt/local/lib OPT=-O0 && lmdbhook
 g++ -std=c++11 -O0  -o lmdbhook -I/opt/local/include -L/opt/local/lib -Wl,-rpath,/opt/local/lib lmdbhook.cpp -llmdb
@@ -87,6 +87,8 @@ void lmdb::env_close(MDB_env*) env=0x1309020
 LMDBHook::~LMDBHook()
 void lmdb::env::close() this=0x407278 handle=0
 ```
+
+Options -O{1,2,3,fast} all trigger the issue, -O0, -Os, -Oz and -Og don't.
 
 Evidently the issue doesn't get triggered when the global LMDBHook instance is created after initialising the LMDBHook static class variables:
 
