@@ -4,7 +4,7 @@ A small demonstrator of what appears to be a bug in GCC's optimiser that I can r
 
 (OPTS defaults to -O3)
 
-The glitch occurs in this function from `lmdb+++.h`:
+The glitch occurs in this function from [`lmdb+++.h`](https://github.com/RJVB/gcc_potential_optimiser_bug/blob/db395beb63831fc2e977d5fc49dbdfcc1459410f/lmdb%2B%2B%2B.h#L1184) :
 
 ```
  /**
