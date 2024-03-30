@@ -28,7 +28,7 @@ Unless I outcomment the 2 tracing expressions the `_handle = nullptr;` assignmen
 
 Here, `lmdb+++.h` is the header from https://github.com/bendiken/lmdbxx with just some tracing output added for this demonstrator.
 
-In on my systems:
+On my systems:
 
 ```
 > make -B INCLUDES=/opt/local/include LIBS=/opt/local/lib && lmdbhook 
@@ -135,3 +135,5 @@ void lmdb::env_close(MDB_env*) env=0x7f8ab0c038f0
 LMDBHook::~LMDBHook()
 void lmdb::env::close() this=0x10e077738 handle=0x0
 ```
+
+*** Update 240330: testing `lmdb::env::close()` inside `LMDBHook::init()` shows that the same function works as expected when called while the programme is running normally...
