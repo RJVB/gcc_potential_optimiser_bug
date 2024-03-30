@@ -36,7 +36,11 @@ public:
         if (!s_envExists) {
             try {
                 s_lmdbEnv = lmdb::env::create();
-                std::cerr << __PRETTY_FUNCTION__ << " s_lmdbEnv=" << s_lmdbEnv << "\n";
+                std::cerr << __PRETTY_FUNCTION__ << " s_lmdbEnv=" << s_lmdbEnv << " handle=" << s_lmdbEnv.handle() << "\n";
+                s_lmdbEnv.close();
+                std::cerr << __PRETTY_FUNCTION__ << " s_lmdbEnv=" << s_lmdbEnv << " handle=" << s_lmdbEnv.handle() << "\n";
+                s_lmdbEnv = lmdb::env::create();
+                std::cerr << __PRETTY_FUNCTION__ << " s_lmdbEnv=" << s_lmdbEnv << " handle=" << s_lmdbEnv.handle() << "\n";
 //                 s_lmdbEnv.open("/tmp/kk.lmdb", MDB_NOSYNC);
 //                 MDB_envinfo stat;
 //                 lmdb::env_info(s_lmdbEnv.handle(), &stat);
