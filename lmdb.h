@@ -492,7 +492,7 @@ char *mdb_version(int *major, int *minor, int *patch);
 	 * @param[in] err The error code
 	 * @retval "error message" The description of the error
 	 */
-char *mdb_strerror(int err);
+// char *mdb_strerror(int err);
 
 	/** @brief Create an LMDB environment handle.
 	 *
@@ -1594,9 +1594,6 @@ int	mdb_reader_list(MDB_env *env, MDB_msg_func *func, void *ctx);
 int	mdb_reader_check(MDB_env *env, int *dead);
 /**	@} */
 
-#ifdef __cplusplus
-}
-#endif
 /** @page tools LMDB Command Line Tools
 	The following describes the command line tools that are available for LMDB.
 	\li \ref mdb_copy_1
@@ -1699,5 +1696,18 @@ struct MDB_env {
      void      *me_userctx;    /**< User-settable context */
      MDB_assert_func *me_assert_func; /**< Callback for assertion failures */
 };
+
+
+// invented:
+static char *mdb_strerror(int err)
+{
+	static char buf[64];
+	snprintf(buf, sizeof(buf)-1, "error#%d", err);
+	return buf;
+}
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _LMDB_H_ */

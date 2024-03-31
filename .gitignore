@@ -3,3 +3,5 @@ lmdbhook
 .*.swp
 .*.swo
 *.o
+*.i
+*.s
